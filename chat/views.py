@@ -86,3 +86,33 @@ class ChatRoomListView(APIView):
         }
 
         return Response(response_content, status=status.HTTP_200_OK)
+
+
+class SendMessageView(APIView):
+    def post(self, request, format=None):
+        message = request.data.get('message')
+        from_user = request.data.get('from_user')
+        to_user = request.data.get('to_user')
+
+        if not all([message, from_user, to_user]):
+            return Response({'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Save the message to the database
+        # Messages.objects.create(
+        #     from_user=from_user,
+        #     to_user=to_user,
+        #     message=message
+        # )
+
+        # Send the message over the WebSocket
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f'chat_{to_user}',
+            {
+                'type': 'chat_message',
+                'message': message
+            }
+        )
+
+        return Response({'status': 'ok'}, status=status.HTTP_200_OK)
+    

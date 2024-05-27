@@ -4,6 +4,8 @@ from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+API_VERSION = "v1"
+
 SECRET_KEY = 'django-insecure-_-@qxsvp6pt4uq$1zrc_p@#_pr7f9*-@77%n9m$dxh2&+_hd_)'
 
 DEBUG = True
@@ -24,7 +26,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'channels',
     'chat',
-    'users'
+    'users',
+    "intergration_app",
 ]
 
 MIDDLEWARE = [
