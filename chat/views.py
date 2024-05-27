@@ -8,6 +8,9 @@ from django.db.models import Q
 
 from .models import ChatRoom, Messages, ChatRoomParticipants
 
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 User = get_user_model()
 
 

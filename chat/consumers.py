@@ -59,6 +59,8 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         self.group_name = f'{self.user_id}-{self.to_user}'
         message_response = await self.save_message(self.group_name, self.user, message)
         message_response['type'] = 'send.message'
+        print(f"Sending message to group chat_{self.to_user}")
+
 
         channel_layer = get_channel_layer()
 
